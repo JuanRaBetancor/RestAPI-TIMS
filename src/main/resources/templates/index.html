@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="refresh" content="30" /> <!-- refresh cada 30 segundos -->
+    <title>London Transport Disruptions LTD</title>
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="http://www.datejs.com/build/date.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0-rc.1.0/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0-rc.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        .margenes-laterales{
+            margin-left: 4%;
+            margin-right: 4%;
+        }
+        #map {
+            width: 100%;
+            height: 580px;min-height: 100%;
+            box-shadow: 5px 5px 5px #888;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'lato', sans-serif;
+        }
+
+        .zui-table {
+            border: solid 1px #DDEEEE;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font: normal 13px Arial, sans-serif;
+        }
+        .zui-table thead th {
+            background-color: #DDEFEF;
+            border: solid 1px #DDEEEE;
+            color: #336B6B;
+            padding: 10px;
+            text-align: left;
+            text-shadow: 1px 1px 1px #fff;
+        }
+        .zui-table tbody td {
+            border: solid 1px #DDEEEE;
+            color: #333;
+            padding: 10px;
+            text-shadow: 1px 1px 1px #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<!--<p th:each="disruption : ${disruptions}"
+   th:text="${disruption.location}"></p>-->
+<div class="margenes-laterales">
+    <table th:if="${not #lists.isEmpty(disruptions)}" style="margin-top: 50px" class="zui-table">
+        <thead class="table100-head">
+            <th class="column1" th:text="${'Nº Disruptions: ' + #lists.size(disruptions)}"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+            <th class="column1"></th>
+        </thead>
+        <thead class="table100-head">
+        <tr>
+            <th class="column1"> Location </th>
+            <th class="column1"> Status </th>
+            <th class="column1"> Severity </th>
+            <th class="column1"> Category </th>
+            <th class="column1"> Starting Time </th>
+            <th class="column1"> End Time </th>
+            <th class="column1"> Comments </th>
+            <th class="column1"> Current Update </th>
+            <th class="column1"> Coordinates </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="disruption : ${disruptions}">
+            <td class="column1"><span th:text="${disruption.location}"> Location </span></td>
+            <td class="column1"><span th:text="${disruption.status}"></span></td>
+            <td class="column1"><span th:text="${disruption.severity}"></span></td>
+            <td class="column1"><span th:text="${disruption.category}"></span></td>
+            <td class="column1"><span th:text="${disruption.startingtime}"></span></td>
+            <td class="column1"><span th:text="${disruption.endtime}"></span></td>
+            <td class="column1"><span th:text="${disruption.comments}"></span></td>
+            <td class="column1"><span th:text="${disruption.currentupdate}"></span></td>
+            <td class="column1"><span th:text="${disruption.lat + ' ' + disruption.lon}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 25px" th:if="${#lists.isEmpty(disruptions)}" class="alert alert-warning margenes-laterales">
+    <strong>Warning!</strong> No disruptions available!
+</div>
+
+<div style="text-align:center;border:1px solid rgb(221, 239, 239); background-color: rgb(221, 239, 239);padding-top: 1%;padding-bottom: 1%;margin-top: 2%; font-family: Arial, Helvetica, sans-serif">
+    &copy; 2019 TFG - CICEI @ULPGC
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+
+    var LeafIcon = L.Icon.extend({
+        options: {
+            iconSize:     [38, 40],
+            iconAnchor:   [22, 94],
+            popupAnchor:  [-3, -76]
+        }
+    });
+
+    var disruptionsMarkerActive = new LeafIcon({
+        iconUrl: 'https://www.freeiconspng.com/uploads/warning-icon-md-png-4.png'
+    });
+
+    var disruptionsMarkerLTA = new LeafIcon({
+        iconUrl: 'https://cdn1.iconfinder.com/data/icons/ui-navigation-1/152/alert-512.png'
+    });
+
+
+    var map = L.map('map').
+    setView([51.5000,  -0.1333], 12);
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+    }).addTo(map);
+
+    L.control.scale().addTo(map);
+    L.marker([41.66, -4.71], {draggable: true}).addTo(map);
+
+
+    var data = [[${disruptions}]];
+    if(data!=null) {
+        data.forEach(function (element) {
+            var lon = element.lon;
+            var lat = element.lat;
+            var stdate = new Date(element.startingtime);
+            var endate = new Date(element.endtime);
+            var stdateformat = stdate.toString("dd/MM/yyyy - HH:mm");
+            var enddateformat = endate.toString("dd/MM/yyyy - HH:mm");
+            var popupText = "<ul><li><strong>Location: </strong>" + element.location + "</li><li><strong>Status: </strong>"+element.status+"</li>" +
+                "<li><strong>Severity: </strong>"+element.severity+"</li><li><strong>Category: </strong>"+element.category+"</li>" +
+                "<li><strong>Prevision: </strong>"+stdateformat+" - "+ enddateformat+"</li><li><strong>Comments: </strong>"+element.comments+"</li>" +
+                "<li><strong>Current Update: </strong>"+element.currentupdate+"</li></ul>";
+
+            var markerLocation = new L.LatLng(lat, lon);
+            if(element.status == "Active"){
+                var marker = new L.Marker(markerLocation, {icon: disruptionsMarkerActive});
+            }else{
+                var marker = new L.Marker(markerLocation, {icon: disruptionsMarkerLTA});
+            }
+
+            map.addLayer(marker);
+            marker.bindPopup(popupText);
+        });
+    }
+</script>
+</body>
+</html>
