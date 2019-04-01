@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
 public class MainApplicationController {
 
-    private List<DisruptionEntity> disruptions;
+    private List<DisruptionEntity> disruptions = new ArrayList<DisruptionEntity>(){};
+    private List<String> tweets = new ArrayList<String>();
 
     @RequestMapping("/")
     public ModelAndView index() {
@@ -29,10 +32,20 @@ public class MainApplicationController {
         return new ResponseEntity<List<DisruptionEntity>>(disruptions, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/tweets", method = RequestMethod.POST)
+    public String getJson(@RequestBody String tweet) {
+        this.tweets.add(0, tweet);
+        if(this.tweets.size() > 15){
+            this.tweets = this.tweets.subList(0,15);
+        }
+        return "recibo: "+tweet;
+    }
+
     @RequestMapping("/disruptions")
     public ModelAndView renderIndex() {
         ModelAndView mav = new ModelAndView();
         mav.addObject("disruptions", this.disruptions);
+        mav.addObject("tweets", this.tweets);
         mav.setViewName("index");
         return mav;
     }

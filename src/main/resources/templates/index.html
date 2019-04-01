@@ -49,15 +49,54 @@
             padding: 10px;
             text-shadow: 1px 1px 1px #fff;
         }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
+        li {
+            float: left;
+            text-decoration: none;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+            color: white;
+            text-decoration: none;
+        }
+        .active {
+            background-color: #4CAF50;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
+<ul style="background-color: #333;">
+    <li><a class="active" href="http://localhost:8080/disruptions">TIMS</a></li>
+    <li><a href="http://localhost:8080">Homepage</a></li>
+    <li><a href="#map">Disruption map</a></li>
+    <li><a href="#disruption-table">Disruption table</a></li>
+    <li><a href="#tweets-feed">Tweets Feed</a></li>
+</ul>
+
 <div id="map"></div>
 <!--<p th:each="disruption : ${disruptions}"
    th:text="${disruption.location}"></p>-->
-<div class="margenes-laterales">
+<div id="disruption-table" class="margenes-laterales">
     <table th:if="${not #lists.isEmpty(disruptions)}" style="margin-top: 50px" class="zui-table">
         <thead class="table100-head">
             <th class="column1" th:text="${'Nº Disruptions: ' + #lists.size(disruptions)}"></th>
@@ -101,6 +140,27 @@
 
 <div style="margin-top: 25px" th:if="${#lists.isEmpty(disruptions)}" class="alert alert-warning margenes-laterales">
     <strong>Warning!</strong> No disruptions available!
+</div>
+
+<div style="margin-top: 25px" th:if="${#lists.isEmpty(tweets)}" class="alert alert-warning margenes-laterales">
+    <strong>Warning!</strong> No tweets available!
+</div>
+
+<div style="text-align: center;">
+    <div id="tweets-feed" class="margenes-laterales" style="display: inline-block;">
+        <table th:if="${not #lists.isEmpty(tweets)}" style="margin-top: 50px" class="zui-table">
+            <thead lass="table100-head">
+            <tr>
+                <th class="column1">Recently Tweets Feed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tweet : ${tweets}">
+                <td><span th:text="${tweet}"> Title </span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div style="text-align:center;border:1px solid rgb(221, 239, 239); background-color: rgb(221, 239, 239);padding-top: 1%;padding-bottom: 1%;margin-top: 2%; font-family: Arial, Helvetica, sans-serif">
