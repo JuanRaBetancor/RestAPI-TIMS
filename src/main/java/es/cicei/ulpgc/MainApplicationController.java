@@ -16,7 +16,7 @@ import java.util.List;
 public class MainApplicationController {
 
     private List<DisruptionEntity> disruptions = new ArrayList<DisruptionEntity>(){};
-    private List<String> tweets = new ArrayList<String>();
+    private List<TweetsEntity> tweets = new ArrayList<TweetsEntity>();
 
     @RequestMapping("/")
     public ModelAndView index() {
@@ -32,13 +32,22 @@ public class MainApplicationController {
         return new ResponseEntity<List<DisruptionEntity>>(disruptions, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tweets", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/tweets", method = RequestMethod.POST)
     public String getJson(@RequestBody String tweet) {
         this.tweets.add(0, tweet);
         if(this.tweets.size() > 15){
             this.tweets = this.tweets.subList(0,15);
         }
         return "recibo: "+tweet;
+    }*/
+
+    @RequestMapping(value = "/tweets", method = RequestMethod.POST)
+    public ResponseEntity<TweetsEntity> getJsonTweet(@RequestBody TweetsEntity tweet) {
+        this.tweets.add(0, tweet);
+        if(this.tweets.size() > 15){
+            this.tweets = this.tweets.subList(0,15);
+        }
+        return new ResponseEntity<TweetsEntity>(tweet,HttpStatus.OK);
     }
 
     @RequestMapping("/disruptions")

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
         .margenes-laterales{
             margin-left: 4%;
@@ -81,13 +82,40 @@
             color: white;
             text-decoration: none;
         }
+        .avatar {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+        img {
+            border: 0;
+        }
+
+        .stream-item-header .account-group {
+
+            color: #14171a;
+            display: -moz-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -ms-flex-negative: 1;
+            flex-shrink: 1;
+            overflow: hidden;
+
+        }
+        .header a:hover{
+            text-decoration: none;
+        }
+        .header .hover-blue:hover{
+            color: #007bff !important;
+        }
     </style>
 </head>
 <body>
 
 <ul style="background-color: #333;">
     <li><a class="active" href="http://localhost:8080/disruptions">TIMS</a></li>
-    <li><a href="http://localhost:8080">Homepage</a></li>
+    <li><a href="http://localhost:8080/">Homepage</a></li>
     <li><a href="#map">Disruption map</a></li>
     <li><a href="#disruption-table">Disruption table</a></li>
     <li><a href="#tweets-feed">Tweets Feed</a></li>
@@ -146,21 +174,44 @@
     <strong>Warning!</strong> No tweets available!
 </div>
 
-<div style="text-align: center;">
-    <div id="tweets-feed" class="margenes-laterales" style="display: inline-block;">
-        <table th:if="${not #lists.isEmpty(tweets)}" style="margin-top: 50px" class="zui-table">
-            <thead lass="table100-head">
-            <tr>
-                <th class="column1">Recently Tweets Feed</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="tweet : ${tweets}">
-                <td><span th:text="${tweet}"> Title </span></td>
-            </tr>
-            </tbody>
-        </table>
+<div id="twitter" style="min-height: 1000px" class="margenes-laterales">
+    <div style="float: left; min-width: 500px;">
+        <div id="tweets-feed" class="margenes-laterales">
+            <table th:if="${not #lists.isEmpty(tweets)}" style="margin-top: 50px" class="zui-table">
+                <thead lass="table100-head">
+                <tr>
+                    <th class="column1">Recently Tweets Feed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tweet : ${tweets}">
+                    <td>
+                        <div style="font-family: Segoe UI, Arial, sans-serif;" class="contenido" >
+                            <div style="float: left;" class="izquierda">
+                                <img class="avatar" th:src="${tweet.imgUrl}"/>
+                            </div>
+                            <div style="margin-left: 60px;" class="derecha">
+                                <div class="header">
+                                    <a th:href="${'https://twitter.com/'+ tweet.userAcc}" class="hover-blue" style="font-weight: bold; color: black;" th:text="${tweet.userName}"></a>
+                                    <a th:href="${'https://twitter.com/'+ tweet.userAcc}" style="font-size: 14px; color: #657786; margin-left: 5px; " th:text="${'@'+tweet.userAcc}"> Title </a>
+                                </div>
+                                <div class="texto">
+                                    <span th:text="${tweet.text}"> Title </span>
+                                    <span style="font-size: 14px; color: #657786; float: right; margin-top: 5px;" th:text="${tweet.location}"> Title </span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <div id="twitter-widget" style="float: right">
+        <a class="twitter-timeline" data-lang="en" data-height="1000" data-width="500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/TfLTrafficNews?ref_src=twsrc%5Etfw">Tweets by TfLTrafficNews</a>
+    </div>
+
 </div>
 
 <div style="text-align:center;border:1px solid rgb(221, 239, 239); background-color: rgb(221, 239, 239);padding-top: 1%;padding-bottom: 1%;margin-top: 2%; font-family: Arial, Helvetica, sans-serif">
