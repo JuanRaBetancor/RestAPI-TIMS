@@ -1,18 +1,41 @@
 package es.cicei.ulpgc;
 
-public class DisruptionEntity {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "disruptions")
+public class DisruptionEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long id;
+    @Column(length = 20048)
     private String location;
+    @Column(length = 20048)
     private String status;
+    @Column(length = 20048)
     private String severity;
+    @Column(length = 20048)
     private String category;
+    @Column(length = 20048)
     private String startingtime;
+    @Column(length = 20048)
     private String endtime;
+    @Column(length = 20048)
     private String comments;
+    @Column(length = 20048)
     private String currentupdate;
+    @Column(length = 20048)
     private String lat;
+    @Column(length = 20048)
     private String lon;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getLocation() {
         return location;

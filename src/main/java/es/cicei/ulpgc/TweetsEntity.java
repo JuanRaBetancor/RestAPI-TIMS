@@ -1,12 +1,33 @@
 package es.cicei.ulpgc;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "tweets")
 public class TweetsEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     private int number;
+    @Column(length = 20048)
     private String text;
+    @Column(length = 20048)
     private String userName;
+    @Column(length = 20048)
     private String userAcc;
+    @Column(length = 20048)
     private String imgUrl;
+    @Column(length = 20048)
     private String location;
 
     public int getNumber() {

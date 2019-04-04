@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="refresh" content="30" /> <!-- refresh cada 30 segundos -->
+    <meta http-equiv="refresh" content="60" /> <!-- refresh cada 30 segundos -->
     <title>London Transport Disruptions LTD</title>
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
@@ -173,7 +173,7 @@
     <strong>Warning!</strong> No tweets available!
 </div>
 
-<div id="twitter" style="min-height: 1300px" class="margenes-laterales">
+<div id="twitter" style="min-height: 1200px; margin-top: 20px;" class="margenes-laterales">
     <div style="float: left; min-width: 500px;">
         <div id="tweets-feed" class="margenes-laterales">
             <table th:if="${not #lists.isEmpty(tweets)}" style="margin-top: 50px" class="zui-table">
