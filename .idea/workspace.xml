@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="01fb9f2c-38bb-4af6-ba75-44247092f8aa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpringRestApp.iml" afterPath="$PROJECT_DIR$/SpringRestApp.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/es/cicei/ulpgc/DisruptionEntity.java" afterPath="$PROJECT_DIR$/src/main/java/es/cicei/ulpgc/DisruptionEntity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/es/cicei/ulpgc/MainApplicationController.java" afterPath="$PROJECT_DIR$/src/main/java/es/cicei/ulpgc/MainApplicationController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/es/cicei/ulpgc/TweetsEntity.java" afterPath="$PROJECT_DIR$/src/main/java/es/cicei/ulpgc/TweetsEntity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/homepage.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/homepage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" />
-    </list>
+    <list default="true" id="01fb9f2c-38bb-4af6-ba75-44247092f8aa" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -454,12 +445,12 @@
       <workItem from="1554224332449" duration="10957000" />
       <workItem from="1554311291797" duration="2131000" />
       <workItem from="1554376279922" duration="1272000" />
-      <workItem from="1554398128351" duration="7349000" />
+      <workItem from="1554398128351" duration="7479000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69678000" />
+    <option name="totallyTimeSpent" value="69808000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
