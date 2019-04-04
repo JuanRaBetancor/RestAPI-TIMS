@@ -122,8 +122,7 @@
 </ul>
 
 <div id="map"></div>
-<!--<p th:each="disruption : ${disruptions}"
-   th:text="${disruption.location}"></p>-->
+
 <div id="disruption-table" class="margenes-laterales">
     <table th:if="${not #lists.isEmpty(disruptions)}" style="margin-top: 50px" class="zui-table">
         <thead class="table100-head">
@@ -174,13 +173,13 @@
     <strong>Warning!</strong> No tweets available!
 </div>
 
-<div id="twitter" style="min-height: 1000px" class="margenes-laterales">
+<div id="twitter" style="min-height: 1300px" class="margenes-laterales">
     <div style="float: left; min-width: 500px;">
         <div id="tweets-feed" class="margenes-laterales">
             <table th:if="${not #lists.isEmpty(tweets)}" style="margin-top: 50px" class="zui-table">
                 <thead lass="table100-head">
                 <tr>
-                    <th class="column1">Recently Tweets Feed</th>
+                    <th class="column1">Recent Tweets Feed</th>
                 </tr>
                 </thead>
                 <tbody>

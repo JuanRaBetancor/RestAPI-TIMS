@@ -32,15 +32,6 @@ public class MainApplicationController {
         return new ResponseEntity<List<DisruptionEntity>>(disruptions, HttpStatus.OK);
     }
 
-    /*@RequestMapping(value = "/tweets", method = RequestMethod.POST)
-    public String getJson(@RequestBody String tweet) {
-        this.tweets.add(0, tweet);
-        if(this.tweets.size() > 15){
-            this.tweets = this.tweets.subList(0,15);
-        }
-        return "recibo: "+tweet;
-    }*/
-
     @RequestMapping(value = "/tweets", method = RequestMethod.POST)
     public ResponseEntity<TweetsEntity> getJsonTweet(@RequestBody TweetsEntity tweet) {
         this.tweets.add(0, tweet);
