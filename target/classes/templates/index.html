@@ -196,7 +196,7 @@
                                 </div>
                                 <div class="texto">
                                     <span th:text="${tweet.text}"> Title </span>
-                                    <span style="font-size: 14px; color: #657786; float: right; margin-top: 5px;" th:text="${tweet.location}"> Title </span>
+                                    <span style="font-size: 14px; color: #657786; float: right; margin-top: 5px;" th:text="${tweet.timestamp + ' - ' +tweet.location}"> Title </span>
                                 </div>
                             </div>
                         </div>
@@ -207,8 +207,8 @@
         </div>
     </div>
 
-    <div id="twitter-widget" style="float: right">
-        <a class="twitter-timeline" data-lang="en" data-height="1000" data-width="500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/TfLTrafficNews?ref_src=twsrc%5Etfw">Tweets by TfLTrafficNews</a>
+    <div id="twitter-widget" style="float: left; margin-left: 10px;">
+        <a class="twitter-timeline" data-lang="en" data-height="1200" data-width="400" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/TfLTrafficNews?ref_src=twsrc%5Etfw">Tweets by TfLTrafficNews</a>
     </div>
 
 </div>

@@ -29,6 +29,16 @@ public class TweetsEntity {
     private String imgUrl;
     @Column(length = 20048)
     private String location;
+    @Column(length = 20048)
+    private String timestamp;
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public int getNumber() {
         return number;
