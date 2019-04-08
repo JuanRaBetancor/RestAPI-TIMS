@@ -14,6 +14,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/flexboxgrid.css" type="text/css"/>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
     <style>
         .margenes-laterales{
             margin-left: 4%;
@@ -114,21 +119,24 @@
 <body>
 
 <ul style="background-color: #333;">
-    <li><a class="active" href="https://restapitims.herokuapp.com/disruptions">TIMS</a></li>
-    <li><a href="https://restapitims.herokuapp.com/">Homepage</a></li>
+    <li><a class="active" href="http://localhost:8080/disruptions">TIMS</a></li>
+    <li><a href="http://localhost:8080/">Homepage</a></li>
     <li><a href="#map">Disruption map</a></li>
     <li><a href="#disruption-table">Disruption table</a></li>
     <li><a href="#tweets-feed">Tweets Feed</a></li>
+    <li><form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form></li>
 </ul>
 
 <div id="map"></div>
 
-<div id="disruption-table" class="margenes-laterales">
+<div id="disruption-table" class="margenes-laterales row">
     <table th:if="${not #lists.isEmpty(disruptions)}" style="margin-top: 50px" class="zui-table">
         <thead class="table100-head">
             <th class="column1" th:text="${'Nº Disruptions: ' + #lists.size(disruptions)}"></th>
-            <th class="column1"></th>
-            <th class="column1"></th>
+            <th class="column1">Search</th>
+            <th class="column1"><input id="searchInput" class="myInput" value="Type To Filter"/></th>
             <th class="column1"></th>
             <th class="column1"></th>
             <th class="column1"></th>
@@ -149,7 +157,7 @@
             <th class="column1"> Coordinates </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="fbody">
         <tr th:each="disruption : ${disruptions}">
             <td class="column1"><span th:text="${disruption.location}"> Location </span></td>
             <td class="column1"><span th:text="${disruption.status}"></span></td>
@@ -173,8 +181,8 @@
     <strong>Warning!</strong> No tweets available!
 </div>
 
-<div id="twitter" style="min-height: 1200px; margin-top: 20px;" class="margenes-laterales">
-    <div style="float: left; min-width: 500px;">
+<div id="twitter" style="min-height: 1200px; margin-top: 20px;" class="margenes-laterales row">
+    <div class="col-lg-8">
         <div id="tweets-feed" class="margenes-laterales">
             <table th:if="${not #lists.isEmpty(tweets)}" style="margin-top: 50px" class="zui-table">
                 <thead lass="table100-head">
@@ -207,7 +215,7 @@
         </div>
     </div>
 
-    <div id="twitter-widget" style="float: left; margin-left: 10px;">
+    <div id="twitter-widget"  class="col-lg-4">
         <a class="twitter-timeline" data-lang="en" data-height="1200" data-width="400" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/TfLTrafficNews?ref_src=twsrc%5Etfw">Tweets by TfLTrafficNews</a>
     </div>
 
@@ -273,6 +281,40 @@
             marker.bindPopup(popupText);
         });
     }
+
+    $("#searchInput").keyup(function () {
+        //split the current value of searchInput
+        var data = this.value.split(" ");
+        //create a jquery object of the rows
+        var jo = $("#fbody").find("tr");
+        if (this.value == "") {
+            jo.show();
+            return;
+        }
+        //hide all the rows
+        jo.hide();
+
+        //Recusively filter the jquery object to get results.
+        jo.filter(function (i, v) {
+            var $t = $(this);
+            for (var d = 0; d != data.length; ++d) {
+                if ($t.is(":contains('" + data[d] + "')")) {
+                    return true;
+                }
+            }
+            return false;
+        })
+        //show the rows that match.
+            .show();
+    }).focus(function () {
+        this.value = "";
+        $(this).css({
+            "color": "black"
+        });
+        $(this).unbind('focus');
+    }).css({
+        "color": "#C0C0C0"
+    });
 </script>
 </body>
 </html>
