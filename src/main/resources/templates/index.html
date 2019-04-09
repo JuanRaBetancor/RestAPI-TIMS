@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="refresh" content="60" /> <!-- refresh cada 30 segundos -->
     <title>London Transport Disruptions LTD</title>
@@ -118,12 +118,17 @@
 </head>
 <body>
 
+
 <ul style="background-color: #333;">
-    <li><a class="active" href="https://restapitims.herokuapp.com/disruptions">TIMS</a></li>
-    <li><a href="https://restapitims.herokuapp.com/">Homepage</a></li>
+    <li><a class="active" th:href="@{/disruptions}">TIMS</a></li>
+    <li><a th:href="@{/}">Homepage</a></li>
     <li><a href="#map">Disruption map</a></li>
     <li><a href="#disruption-table">Disruption table</a></li>
     <li><a href="#tweets-feed">Tweets Feed</a></li>
+    <li><a href="https://github.com/JuanRaBetancor/RestAPI-TIMS">Github</a></li>
+    <li><a href="https://bitbucket.org/JuanraBO/sparkstreamingapp/">Bitbucket</a></li>
+    <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
+    <li><a sec:authorize="isAnonymous()" th:href="@{/login}">Login</a></li>
 </ul>
 
 <div id="map"></div>
